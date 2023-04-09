@@ -10,6 +10,7 @@ const { body, validationResult } = require('express-validator');
 const router = express.Router();
 //these are for valid name,email and password
 
+// ROUTE 1: Create a User using: POST "/api/auth/createuser". No login required
 // Route 1 create user 
 router.post('/createuser',[
     body('name','Enter a valid name').isLength({ min: 3 }),
@@ -41,6 +42,9 @@ router.post('/createuser',[
       //console.log(jwtData)
       success=true;
       res.json({success,authtoken})
+      console.log(authtoken);
+      localStorage.setItem("auth-token",authtoken);
+     
     } catch(error){
         console.error(error.message);
         res.status(500).send("Some error occured");
@@ -84,6 +88,8 @@ router.post('/login',[
         //console.log(jwtData)
         success=true;
         res.json({success,authtoken})
+        console.log(authtoken)
+       
     }catch(error){
         console.error(error.message);
         res.status(500).send("Some error occured");
